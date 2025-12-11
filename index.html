@@ -489,6 +489,27 @@
         .scroll-top:hover {
             transform: translateY(-5px);
         }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            background: var(--accent-color);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.3s, transform 0.3s;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body>
@@ -759,6 +780,9 @@
     <!-- Scroll to top button -->
     <div class="scroll-top" id="scrollTop">↑</div>
 
+    <!-- Toast notification -->
+    <div class="toast" id="toast"></div>
+
     <!-- JavaScript -->
     <script>
         // Mobile menu toggle
@@ -806,6 +830,16 @@
 
         // Contact form handling
         const contactForm = document.getElementById('contactForm');
+        const toast = document.getElementById('toast');
+        
+        function showToast(message) {
+            toast.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
         
         contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -818,7 +852,7 @@
             console.log('Form submitted:', data);
             
             // Show success message
-            alert('Vielen Dank für Ihre Nachricht! Wir werden uns in Kürze bei Ihnen melden.');
+            showToast('✓ Vielen Dank für Ihre Nachricht! Wir werden uns in Kürze bei Ihnen melden.');
             
             // Reset form
             contactForm.reset();
